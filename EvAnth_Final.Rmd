@@ -1,0 +1,38 @@
+---
+title: "EvAnth_Final"
+author: "Carly Levi"
+date: "November 22, 2015"
+output: html_document
+---
+```{r}
+set.seed(4673)
+library(ggplot2)
+library(dplyr)
+library(stringr)
+```
+
+
+
+```{r}
+numloci<-10 
+eff<-rnorm(numloci,0,1)
+numind<-1000 #number of individuals to sample
+high<-2*sum(replace(eff,eff<0,0)) 
+low<-2*sum(replace(eff,eff>0,0))
+pheno<-c() 
+genomat<-matrix(NA,nrow=numind,ncol=numloci) 
+sample_dist <- data.frame(means = rep(NA, 15000))
+for(i in 1:numind){
+   geno<-replicate(numloci,sum(sample(c(0,1),2,replace=T)))
+   genomat[i,]<-geno
+   pheno<-c(pheno,geno%*%eff)
+}
+hist(pheno,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+geno
+pheno
+mean(pheno)
+```
+geno = 10 loci (0,1,2)
+pheno = value plotted on histogram
+
+sample size = 1000
