@@ -49,39 +49,43 @@ normal <- genomat2 %>% #gives number of normal individuals and phenotype
 ```
  
 ```{r}
-#outcomes = c(0,1)
+outcomes = c(0,1)
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
-geno1 <- matrix(runif(100),ncol=1)
-geno1<- ifelse(mat<0.1,NA,mat)
+geno1[geno1 == 0] <- 0
+geno1[geno1 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno1[geno1 == 2] <- 1
 
 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
+geno2[geno == 0] <- 0
+geno2[geno1 == 2] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
 geno2[geno1 == 2] <- 1
-geno2[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
 
 geno3 <- normal[sample(nrow(normal), numind,replace = TRUE),]
 geno3 <- as.data.frame(geno3)
-geno3[geno1 == 2] <- 1
-geno3[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
+geno3[geno3 == 0] <- 0
+geno3[geno3 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno3[geno3 == 2] <- 1
 
 geno4 <- normal[sample(nrow(normal), numind,replace = TRUE), ]
 geno4 <- as.data.frame(geno4)
-geno4[geno1 == 2] <- 1
-geno4[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
+geno4[geno4 == 0] <- 0
+geno4[geno4 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno4[geno4 == 2] <- 1
 
 geno5 <- high_function[sample(nrow(high_function), numind,replace = TRUE),]
 geno5 <- as.data.frame(geno5)
-geno5[geno1 == 2] <- 1
-geno5[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
+geno5[geno5 == 0] <- 0
+geno5[geno5 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno5[geno5 == 2] <- 1
 
 geno6 <- high_function[sample(nrow(high_function), numind,replace = TRUE), ]
 geno6 <- as.data.frame(geno6)
-geno6[geno1 == 2] <- 1
-geno6[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
-
-geno1
+geno6[geno6 == 0] <- 0
+geno6[geno6 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno6[geno6 == 2] <- 1
 
 ```
  
@@ -132,38 +136,44 @@ pheno_high_high$phenos <- genokid_high_high[,11]
 
 ```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
-  geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_histogram(binwidth =.2) +
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
 
 ```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
   geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
 
 ```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
-  geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_histogram(binwidth =.2) +
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
 
 ```{r normal_normal}
 ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
-  geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_histogram(binwidth =.2) +
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
 
 ```{r normal_high}
 ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
-  geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_histogram(binwidth =.2) +
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
 
 ```{r high_high}
 ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
-  geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red")
+  geom_histogram(binwidth =.2) +
+  geom_vline(xintercept = -3.651707, color = "red") +
+  xlab("Phenotypic Value")
 ```
  
 
