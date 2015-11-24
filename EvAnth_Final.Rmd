@@ -71,6 +71,7 @@ for(i in 1:numind){
 genokid <- geno1 + geno2
 
 genokid
+pheno_feeble_feeble <- genokid[,11]
 pheno_feeble_feeble
 ```
 
