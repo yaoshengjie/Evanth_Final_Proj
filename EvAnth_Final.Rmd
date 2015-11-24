@@ -12,50 +12,105 @@ library(stringr)
 ```
 
 ```{r}
-numloci<-10 
-eff<-rnorm(numloci,0,1)
-numind<-10000#number of individuals to sample
+numloci<-10 #number of loci, feeblemindedness is a complex trait
+eff<-rnorm(numloci,0,1) #effect size
+numind<-1000 #number of individuals to sample
 high<-2*sum(replace(eff,eff<0,0)) 
 low<-2*sum(replace(eff,eff>0,0))
-pheno<-c() 
-genomat <- matrix(NA, nrow = numind, ncol = numloci) 
-#sample_dist <- data.frame(means = rep(NA, 15000))
+genomat <- matrix(NA, nrow = numind, ncol = numloci + 1) 
 pheno_df <- data.frame(phenos = rep(NA, numind))
 for(i in 1:numind){
    geno<-replicate(numloci,sum(sample(c(0,1),2,replace=T)))
-   genomat[i,]<-geno
+   genomat[i, 1:10]<-geno
+   genomat[i,11] <- geno %*% eff
    pheno_df$phenos[i] <- geno %*% eff
 }
+
 hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-pheno_df
-geno
+abline(v=(-3.651707), col='red')
+abline(v=(6.781549), col='red')
+
 sd <- sd(pheno_df$phenos)
 sd
+
 mean <- mean(pheno_df$phenos)
 mean
 
-feeble <- pheno_df %>%
-  filter(phenos < (mean - 2*sd))
-feeble
+genomat2 <- as.data.frame(genomat)
 
-high_function <- pheno_df %>%
-  filter(phenos > (mean + 2*sd))
-high_function
+feeble <- genomat2 %>% #gives number of feeble minded individuals and phenotype
+  filter(genomat2[,11] < (mean - 2*sd))
 
-normal <- pheno_df %>%
-  filter(phenos < (mean + 2*sd), phenos > (mean - 2*sd)) 
-normal
+high_function <- genomat2 %>% #gives number of high functioning individuals and phenotype
+  filter(genomat2[,11] > (mean + 2*sd))
+
+normal <- pheno_df %>% #gives number of normal individuals and phenotype
+  filter(genomat2[,11] < (mean + 2*sd), genomat2[,11] > (mean - 2*sd)) 
+```
+
+```{r}
+geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
+geno1<- as.data.frame(geno1)
+
+geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
+geno2 <- as.data.frame(geno2)
+```
+
+```{r}
+pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
+for(i in 1:numind){
+  parent1 <- geno1[i,]
+  parent1$V11 <- NULL
+  parent2 <- geno2[i,]
+  parent2$V11 <- NULL
+}
+```
+
+```{r}
+genokid <- c()
+for (i in 1:10){
+  genokid <- c(genokid, parent1[i] + parent2[i])
+  if(genokid[i] > 2)
+    genokid[i] <- 2
+  genokid <- as.numeric(genokid)
+  pheno_feeble_feeble$phenos[i] <- genokid %*% eff
+}
+pheno_feeble_feeble
+genokid
+```
+
+```{r eval = FALSE}
+f1num<-numind 
+f1genomat<-matrix(NA,nrow=f1num,ncol=numloci) 
+f1pheno<-c() 
+sampmat<-matrix(pheno_feeble_feeble$phenos,nrow=numind,ncol=2,byrow=T) 
+sampmat
+```
 
 ```
-geno = 10 loci (0,1,2)
 
-pheno = value plotted on histogram
 
-sample size = 10000
+for(i in 1:f1num){
+allele1<-sapply(geno1,function(x) sample(sampmat[x+1,],1)) #sample from low phenotype pare nt
+allele2<-sapply(geno2,function(x) sample(sampmat[x+1,],1)) #sample from high phenotype p arent
+    f1genomat[i,]<-allele1+allele2
+    f1pheno<-c(f1pheno,(allele1+allele2)%*%eff)
+}
 
-put pheno in data frame
+hist(pheno_df$phenos,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(1,0,0,1/4),freq=F,ylim=c(0,1))
 
-filter(pheno > 2sd,pheno < 2sd )
+hist(f1pheno,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(0,0,1,1/4),add=T,freq=F)
 
-feeble <- pheno_df %>%
-  filter(pheno < (mean - 2*sd))
+abline(v=geno1%*%eff,lty=2,col='gray70')
+abline(v=geno2%*%eff,lty=2,col='gray70')
+
+```
+
+abline(v=geno1%*%eff,lty=2,col='gray70')
+abline(v=geno2%*%eff,lty=2,col='gray70')
+
+
+
+
+
+
