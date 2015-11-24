@@ -58,6 +58,7 @@ geno2 <- as.data.frame(geno2)
 
 ```{r}
 pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
+genokid <- c()
 for(i in 1:numind){
   parent1 <- geno1[i,]
   parent1$V11 <- NULL
@@ -67,18 +68,23 @@ for(i in 1:numind){
 ```
 
 ```{r}
-genokid <- c()
-for (i in 1:10){
+for (i in 1:numind){
   genokid <- c(genokid, parent1[i] + parent2[i])
-  if(genokid[i] > 2)
-    genokid[i] <- 2
+  #if(genokid[i] > 2)
+    #genokid[i] <- 2
   genokid <- as.numeric(genokid)
+<<<<<<< HEAD
 }
 for (i in 1:numind){
   pheno_feeble_feeble$phenos[i] <- genokid %*% eff
+=======
+  pheno_feeble_feeble$phenos[i] <- genokid[i] %*% eff
+>>>>>>> deab5cfa11ef442e156083e70a05572bc99f38f1
 }
-pheno_feeble_feeble
+parent1
+parent2
 genokid
+pheno_feeble_feeble$phenos
 ```
 
 ```{r eval = FALSE}
@@ -103,13 +109,7 @@ hist(pheno_df$phenos,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,hi
 
 hist(f1pheno,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(0,0,1,1/4),add=T,freq=F)
 
-abline(v=geno1%*%eff,lty=2,col='gray70')
-abline(v=geno2%*%eff,lty=2,col='gray70')
 
-```
-
-abline(v=geno1%*%eff,lty=2,col='gray70')
-abline(v=geno2%*%eff,lty=2,col='gray70')
 
 
 
