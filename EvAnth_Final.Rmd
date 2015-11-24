@@ -51,7 +51,10 @@ normal <- pheno_df %>% #gives number of normal individuals and phenotype
 ```{r}
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 38ebea6f4ced7e4bec5a6a43197b400eefc9444c
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
 ```
@@ -63,36 +66,15 @@ genokid <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
  
 ```{r}
 genokid <- geno1 + geno2
- 
-genokid
-pheno_feeble_feeble <- genokid[,11]
+
+pheno_feeble_feeble$phenos <- genokid[,11]
 pheno_feeble_feeble
 ```
- 
+
 ```{r}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
-           geom_histogram()
-```
+  geom_histogram(binwidth =.15)
 
- 
-```{r eval = FALSE}
-f1num<-numind
-f1genomat<-matrix(NA,nrow=f1num,ncol=numloci)
-f1pheno<-c()
-sampmat<-matrix(pheno_feeble_feeble$phenos,nrow=numind,ncol=2,byrow=T)
-sampmat
+hist(pheno_feeble_feeble$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
 ```
- 
-```
- 
- 
-for(i in 1:f1num){
-allele1<-sapply(geno1,function(x) sample(sampmat[x+1,],1)) #sample from low phenotype pare nt
-allele2<-sapply(geno2,function(x) sample(sampmat[x+1,],1)) #sample from high phenotype p arent
-    f1genomat[i,]<-allele1+allele2
-    f1pheno<-c(f1pheno,(allele1+allele2)%*%eff)
-}
- 
-hist(pheno_df$phenos,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(1,0,0,1/4),freq=F,ylim=c(0,1))
- 
-hist(f1pheno,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(0,0,1,1/4),add=T,freq=F)
