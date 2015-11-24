@@ -101,21 +101,22 @@ pheno_feeble_high$phenos <- genokid_feeble_high[,11]
 #pheno_feeble_high
 
 genokid_normal_normal <- geno3 + geno4
-pheno_normal_normal$phenos <- genokid_normal_normal[11]
-#pheno_normal_normal
+pheno_normal_normal$phenos <- genokid_normal_normal[,11]
+#pheno_normal_normal 
 
 genokid_normal_high <- geno3 + geno5
-pheno_normal_high$phenos <- genokid_normal_high[11]
-#pheno_normal_high
+pheno_normal_high$phenos <- genokid_normal_high[,11]
+#pheno_normal_high 
 
 genokid_high_high <- geno5 + geno6
-pheno_high_high$phenos <- genokid_high_high[11]
+pheno_high_high$phenos <- genokid_high_high[,11]
 #pheno_high_high
 ```
 
 ```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
-  geom_histogram(binwidth =.15)
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
 
 hist(pheno_feeble_feeble$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
 abline(v=(-3.651707), col='red')
@@ -123,7 +124,8 @@ abline(v=(-3.651707), col='red')
 
 ```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
-  geom_histogram(binwidth =.15)
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
 
 hist(pheno_feeble_normal$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
 abline(v=(-3.651707), col='red')
@@ -131,9 +133,37 @@ abline(v=(-3.651707), col='red')
 
 ```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
-  geom_histogram(binwidth =.15)
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
 
 hist(pheno_feeble_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
+```
+
+```{r normal_normal}
+ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
+
+hist(pheno_normal_normal$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
+```
+
+```{r normal_high}
+ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
+
+hist(pheno_normal_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
+```
+
+```{r high_high}
+ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = -3.651707, color = "red")
+
+hist(pheno_high_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
 abline(v=(-3.651707), col='red')
 ```
  
