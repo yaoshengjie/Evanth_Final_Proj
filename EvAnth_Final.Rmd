@@ -54,7 +54,6 @@ geno1<- as.data.frame(geno1)
 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
-geno2
 ```
 
 ```{r}
