@@ -153,14 +153,7 @@ genokid
 pheno_feeble_feeble <- genokid[,11]
 pheno_feeble_feeble
 ```
- 
-```{r eval = FALSE}
-f1num<-numind 
-f1genomat<-matrix(NA,nrow=f1num,ncol=numloci) 
-f1pheno<-c() 
-sampmat<-matrix(pheno_feeble_feeble$phenos,nrow=numind,ncol=2,byrow=T)
-sampmat
-```
+
  
 ```
  
