@@ -227,15 +227,8 @@ prop_hh
 ```{r}
 #probability of child being feebleminded given that one parent is feebleminded
 
-probability_kid1 <- prop_fh + prop_fn
+probability_kid1 <- prop_fh + prop_fn + prop_ff
 probability_kid1
-```
-
-```{r}
-#probability of child being feebleminded given that both parents are feebleminded
-
-probability_kid2 <- prop_ff
-probability_kid2
 
 #not actually one, but very close because we have been using discrete values
 ```
@@ -243,7 +236,7 @@ probability_kid2
 ```{r}
 #probability of one parent being feebleminded given that their child is feebleminded
 
-probability_parent <- (prop_fh + prop_fn) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
+probability_parent <- (prop_fh + prop_fn + prop_ff) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
 probability_parent
 ```
 

@@ -268,20 +268,15 @@ prop_hh</code></pre>
 <pre><code>## [1] 0</code></pre>
 <pre class="r"><code>#probability of child being feebleminded given that one parent is feebleminded
 
-probability_kid1 &lt;- prop_fh + prop_fn
+probability_kid1 &lt;- prop_fh + prop_fn + prop_ff
 probability_kid1</code></pre>
-<pre><code>## [1] 0.374</code></pre>
-<pre class="r"><code>#probability of child being feebleminded given that both parents are feebleminded
-
-probability_kid2 &lt;- prop_ff
-probability_kid2</code></pre>
-<pre><code>## [1] 1</code></pre>
+<pre><code>## [1] 1.374</code></pre>
 <pre class="r"><code>#not actually one, but very close because we have been using discrete values</code></pre>
 <pre class="r"><code>#probability of one parent being feebleminded given that their child is feebleminded
 
-probability_parent &lt;- (prop_fh + prop_fn) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
+probability_parent &lt;- (prop_fh + prop_fn + prop_ff) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
 probability_parent</code></pre>
-<pre><code>## [1] 0.2694524</code></pre>
+<pre><code>## [1] 0.9899135</code></pre>
 
 
 </div>
