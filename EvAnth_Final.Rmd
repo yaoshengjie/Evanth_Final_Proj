@@ -51,7 +51,7 @@ normal <- pheno_df %>% #gives number of normal individuals and phenotype
 ```{r}
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
- 
+
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
 ```
@@ -68,6 +68,12 @@ genokid
 pheno_feeble_feeble <- genokid[,11]
 pheno_feeble_feeble
 ```
+ 
+```{r}
+ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
+           geom_histogram()
+```
+
  
 ```{r eval = FALSE}
 f1num<-numind
