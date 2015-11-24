@@ -51,20 +51,66 @@ normal <- pheno_df %>% #gives number of normal individuals and phenotype
 ```{r}
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
+ 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
+
+geno3 <- normal[sample(nrow(normal), numind,replace = TRUE),]
+geno3 <- as.data.frame(geno3)
+ 
+geno4 <- normal[sample(nrow(normal), numind,replace = TRUE), ]
+geno4 <- as.data.frame(geno4)
+
+geno5 <- high_function[sample(nrow(high_function), numind,replace = TRUE),]
+geno5 <- as.data.frame(geno5)
+ 
+geno6 <- high_function[sample(nrow(high_function), numind,replace = TRUE), ]
+geno6 <- as.data.frame(geno6)
 ```
  
 ```{r}
 pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
-genokid <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+pheno_feeble_normal <- data.frame(phenos = rep(NA, numind))
+pheno_feeble_high <- data.frame(phenos = rep(NA, numind))
+pheno_normal_normal <- data.frame(phenos = rep(NA, numind))
+pheno_normal_high <- data.frame(phenos = rep(NA, numind))
+pheno_high_high <- data.frame(phenos = rep(NA, numind))
 ```
- 
-```{r}
-genokid <- geno1 + geno2
 
-pheno_feeble_feeble$phenos <- genokid[,11]
+```{r}
+genokid_feeble_feeble <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_feeble_normal <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_feeble_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_normal_normal <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_normal_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_high_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+```
+
+
+```{r}
+genokid_feeble_feeble <- geno1 + geno2
+pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
 pheno_feeble_feeble
+
+genokid_feeble_normal <- geno1 + geno3
+pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
+pheno_feeble_normal
+
+genokid_feeble_high <- geno1 + geno5
+pheno_feeble_high$phenos <- genokid_feeble_high[,11]
+pheno_feeble_high
+
+genokid_normal_normal <- geno3 + geno4
+pheno_normal_normal$phenos <- genokid_normal_normal[,11]
+pheno_normal_normal
+
+genokid_normal_high <- geno3 + geno5
+pheno_normal_high$phenos <- genokid_normal_high[,11]
+pheno_normal_high
+
+genokid_high_high <- geno5 + geno6
+pheno_high_high$phenos <- genokid_high_high[,11]
+pheno_high_high
 ```
 
 ```{r}
@@ -75,76 +121,8 @@ hist(pheno_feeble_feeble$phenos,breaks = 100, main = '',xlab='phenotypic value',
 abline(v=(-3.651707), col='red')
 ```
 
-On Nov 23, 2015, at 11:22 PM, Shengjie Yao <yao.shengjie@duke.edu> wrote:
 
----
-title: "EvAnth_Final"
-author: "Carly Levi"
-date: "November 22, 2015"
-output: html_document
----
-```{r}
-set.seed(83942)
-library(ggplot2)
-library(dplyr)
-library(stringr)
-```
- 
-```{r}
-numloci<-10 #number of loci, feeblemindedness is a complex trait
-eff<-rnorm(numloci,0,1) #effect size
-numind<-1000 #number of individuals to sample
-high<-2*sum(replace(eff,eff<0,0)) 
-low<-2*sum(replace(eff,eff>0,0))
-genomat <- matrix(NA, nrow = numind, ncol = numloci + 1) 
-pheno_df <- data.frame(phenos = rep(NA, numind))
-for(i in 1:numind){
-   geno<-replicate(numloci,sum(sample(c(0,1),2,replace=T)))
-   genomat[i, 1:10]<-geno
-   genomat[i,11] <- geno %*% eff
-   pheno_df$phenos[i] <- geno %*% eff
-}
- 
-hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
-abline(v=(6.781549), col='red')
- 
-sd <- sd(pheno_df$phenos)
-sd
- 
-mean <- mean(pheno_df$phenos)
-mean
- 
-genomat2 <- as.data.frame(genomat)
- 
-feeble <- genomat2 %>% #gives number of feeble minded individuals and phenotype
-  filter(genomat2[,11] < (mean - 2*sd))
- 
-high_function <- genomat2 %>% #gives number of high functioning individuals and phenotype
-  filter(genomat2[,11] > (mean + 2*sd))
- 
-normal <- pheno_df %>% #gives number of normal individuals and phenotype
-  filter(genomat2[,11] < (mean + 2*sd), genomat2[,11] > (mean - 2*sd))
-```
- 
-```{r}
-geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
-geno1<- as.data.frame(geno1)
- 
-geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
-geno2 <- as.data.frame(geno2)
-```
- 
-```{r}
-pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
-genokid <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-for(i in 1:numind){
-  parent1 <- geno1[i,]
-  parent1$V11 <- NULL
-  parent2 <- geno2[i,]
-  parent2$V11 <- NULL
-}
-```
+
  
 ```{r}
 genokid <- geno1 + geno2
