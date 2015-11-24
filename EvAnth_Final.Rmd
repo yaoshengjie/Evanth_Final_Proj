@@ -74,11 +74,18 @@ geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
 ```
 
+<<<<<<< HEAD
 
 #geno_feeble_feeble <- data.frame(genos = rep(NA, numind))
 #pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
 
 for(i in 1:1000){
+=======
+```{r}
+pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
+genokid <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+for(i in 1:numind){
+>>>>>>> 3764eab4a2f8bd8a725e20bee03b0e20ba7e8203
   parent1 <- geno1[i,]
   parent1$V11 <- NULL
   parent2 <- geno2[i,]
@@ -88,6 +95,7 @@ parent1
 parent2
 ```
 
+<<<<<<< HEAD
 
 for (i in 1:numind)
   genokid <- c()
@@ -104,6 +112,13 @@ for (i in 1:numind)
 genokid
 #geno_feeble_feeble
 #pheno_feeble_feeble
+=======
+```{r}
+genokid <- geno1 + geno2
+
+genokid
+pheno_feeble_feeble
+>>>>>>> 3764eab4a2f8bd8a725e20bee03b0e20ba7e8203
 ```
 
 ```{r eval = FALSE}
