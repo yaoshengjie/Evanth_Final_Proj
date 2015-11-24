@@ -54,12 +54,13 @@ geno1<- as.data.frame(geno1)
 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
+geno2
 ```
 
 ```{r}
 pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
 genokid <- c()
-for(i in 1:numind){
+for(i in 1:10){
   parent1 <- geno1[i,]
   parent1$V11 <- NULL
   parent2 <- geno2[i,]
@@ -68,12 +69,15 @@ for(i in 1:numind){
 ```
 
 ```{r}
-for (i in 1:numind){
+for (i in 1:10){
   genokid <- c(genokid, parent1[i] + parent2[i])
-  #if(genokid[i] > 2)
-    #genokid[i] <- 2
+  if(genokid[i] > 2)
+    genokid[i] <- 2
   genokid <- as.numeric(genokid)
-  pheno_feeble_feeble$phenos[i] <- genokid[i] %*% eff
+}
+
+for (i in 1:numind){
+  pheno_feeble_feeble$phenos[i] <- genokid %*% eff
 }
 parent1
 parent2
