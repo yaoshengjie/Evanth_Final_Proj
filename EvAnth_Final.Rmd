@@ -40,30 +40,30 @@ genomat2 <- as.data.frame(genomat)
  
 feeble <- genomat2 %>% #gives number of feeble minded individuals and phenotype
   filter(genomat2[,11] < (mean - 2*sd))
- 
+
 high_function <- genomat2 %>% #gives number of high functioning individuals and phenotype
   filter(genomat2[,11] > (mean + 2*sd))
- 
-normal <- pheno_df %>% #gives number of normal individuals and phenotype
+
+normal <- genomat2 %>% #gives number of normal individuals and phenotype
   filter(genomat2[,11] < (mean + 2*sd), genomat2[,11] > (mean - 2*sd))
 ```
  
 ```{r}
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
- 
+
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
 
 geno3 <- normal[sample(nrow(normal), numind,replace = TRUE),]
 geno3 <- as.data.frame(geno3)
- 
+
 geno4 <- normal[sample(nrow(normal), numind,replace = TRUE), ]
 geno4 <- as.data.frame(geno4)
 
 geno5 <- high_function[sample(nrow(high_function), numind,replace = TRUE),]
 geno5 <- as.data.frame(geno5)
- 
+
 geno6 <- high_function[sample(nrow(high_function), numind,replace = TRUE), ]
 geno6 <- as.data.frame(geno6)
 ```
@@ -78,42 +78,42 @@ pheno_high_high <- data.frame(phenos = rep(NA, numind))
 ```
 
 ```{r}
-genokid_feeble_feeble <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-genokid_feeble_normal <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-genokid_feeble_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-genokid_normal_normal <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-genokid_normal_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
-genokid_high_high <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
+genokid_feeble_feeble <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
+genokid_feeble_normal <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
+genokid_feeble_high <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
+genokid_normal_normal <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
+genokid_normal_high <- matrix(rep(NA, numind*11), nrow = numind, ncol =  numind + 1)
+genokid_high_high <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 ```
 
 
 ```{r}
 genokid_feeble_feeble <- geno1 + geno2
 pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
-pheno_feeble_feeble
+#pheno_feeble_feeble
 
 genokid_feeble_normal <- geno1 + geno3
 pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
-pheno_feeble_normal
+#pheno_feeble_normal
 
 genokid_feeble_high <- geno1 + geno5
 pheno_feeble_high$phenos <- genokid_feeble_high[,11]
-pheno_feeble_high
+#pheno_feeble_high
 
 genokid_normal_normal <- geno3 + geno4
-pheno_normal_normal$phenos <- genokid_normal_normal[,11]
-pheno_normal_normal
+pheno_normal_normal$phenos <- genokid_normal_normal[11]
+#pheno_normal_normal
 
 genokid_normal_high <- geno3 + geno5
-pheno_normal_high$phenos <- genokid_normal_high[,11]
-pheno_normal_high
+pheno_normal_high$phenos <- genokid_normal_high[11]
+#pheno_normal_high
 
 genokid_high_high <- geno5 + geno6
-pheno_high_high$phenos <- genokid_high_high[,11]
-pheno_high_high
+pheno_high_high$phenos <- genokid_high_high[11]
+#pheno_high_high
 ```
 
-```{r}
+```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
   geom_histogram(binwidth =.15)
 
@@ -121,18 +121,20 @@ hist(pheno_feeble_feeble$phenos,breaks = 100, main = '',xlab='phenotypic value',
 abline(v=(-3.651707), col='red')
 ```
 
+```{r feeble_normal}
+ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
+  geom_histogram(binwidth =.15)
 
-
- 
-```{r}
-genokid <- geno1 + geno2
- 
-genokid
-pheno_feeble_feeble <- genokid[,11]
-pheno_feeble_feeble
+hist(pheno_feeble_normal$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
 ```
 
- 
+```{r feeble_high}
+ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
+  geom_histogram(binwidth =.15)
+
+hist(pheno_feeble_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
+abline(v=(-3.651707), col='red')
 ```
  
  
