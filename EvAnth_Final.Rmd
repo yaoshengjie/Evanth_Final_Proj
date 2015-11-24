@@ -73,6 +73,8 @@ for (i in 1:10){
   if(genokid[i] > 2)
     genokid[i] <- 2
   genokid <- as.numeric(genokid)
+}
+for (i in 1:numind){
   pheno_feeble_feeble$phenos[i] <- genokid %*% eff
 }
 pheno_feeble_feeble
