@@ -58,7 +58,7 @@ geno2 <- as.data.frame(geno2)
 
 ```{r}
 pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
-genokid <- c()
+genokid <- matrix(rep(NA, numind * 10), nrow = 1000, ncol = 10)
 for(i in 1:numind){
   parent1 <- geno1[i,]
   parent1$V11 <- NULL
@@ -68,18 +68,10 @@ for(i in 1:numind){
 ```
 
 ```{r}
-for (i in 1:10){
-  genokid <- c(genokid, parent1[i] + parent2[i])
-  if(genokid[i] > 2)
-    genokid[i] <- 2
-  genokid <- as.numeric(genokid)
-}
-for (i in 1:numind){
-  pheno_feeble_feeble$phenos [i] <- genokid %*% eff
-}
+genokid <- geno1 + geno2
 
 genokid
-pheno_feeble_feeble$phenos
+pheno_feeble_feeble
 ```
 
 ```{r eval = FALSE}
