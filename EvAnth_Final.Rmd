@@ -4,6 +4,7 @@ author: "Carly Levi"
 date: "November 22, 2015"
 output: html_document
 ---
+###Loading Libraries
 ```{r}
 set.seed(83942)
 library(ggplot2)
@@ -11,6 +12,7 @@ library(dplyr)
 library(stringr)
 ```
  
+###Creating Parent Distribution
 ```{r}
 numloci<-10 #number of loci, feeblemindedness is a complex trait
 eff<-rnorm(numloci,0,1) #effect size
@@ -25,7 +27,7 @@ for(i in 1:numind){
    genomat[i,11] <- geno %*% eff
    pheno_df$phenos[i] <- geno %*% eff
 }
- 
+#parent distribution
 hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
 abline(v=(-3.651707), col='red')
 abline(v=(6.781549), col='red')
@@ -35,7 +37,10 @@ sd
  
 mean <- mean(pheno_df$phenos)
 mean
- 
+```
+
+###Filter Data Frame
+```{r}
 genomat2 <- as.data.frame(genomat)
  
 feeble <- genomat2 %>% #gives number of feeble minded individuals and phenotype
@@ -88,7 +93,8 @@ geno6[geno6 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
 geno6[geno6 == 2] <- 1
 
 ```
- 
+
+###Data Frames For Each Combination
 ```{r}
 pheno_feeble_feeble <- data.frame(phenos = rep(NA, numind))
 pheno_feeble_normal <- data.frame(phenos = rep(NA, numind))
@@ -98,6 +104,7 @@ pheno_normal_high <- data.frame(phenos = rep(NA, numind))
 pheno_high_high <- data.frame(phenos = rep(NA, numind))
 ```
 
+###Empty Matrices
 ```{r}
 genokid_feeble_feeble <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 genokid_feeble_normal <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
@@ -107,7 +114,7 @@ genokid_normal_high <- matrix(rep(NA, numind*11), nrow = numind, ncol =  numind 
 genokid_high_high <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 ```
 
-
+###Crossing Genotypes
 ```{r}
 genokid_feeble_feeble <- geno1 + geno2
 pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]

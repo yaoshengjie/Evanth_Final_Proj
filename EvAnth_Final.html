@@ -68,6 +68,8 @@ img {
 </div>
 
 
+<div id="loading-libraries" class="section level3">
+<h3>Loading Libraries</h3>
 <pre class="r"><code>set.seed(83942)
 library(ggplot2)
 library(dplyr)</code></pre>
@@ -82,6 +84,9 @@ library(dplyr)</code></pre>
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code>library(stringr)</code></pre>
+</div>
+<div id="creating-parent-distribution" class="section level3">
+<h3>Creating Parent Distribution</h3>
 <pre class="r"><code>numloci&lt;-10 #number of loci, feeblemindedness is a complex trait
 eff&lt;-rnorm(numloci,0,1) #effect size
 numind&lt;-1000 #number of individuals to sample
@@ -95,7 +100,7 @@ for(i in 1:numind){
    genomat[i,11] &lt;- geno %*% eff
    pheno_df$phenos[i] &lt;- geno %*% eff
 }
- 
+#parent distribution
 hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
 abline(v=(-3.651707), col='red')
 abline(v=(6.781549), col='red')</code></pre>
@@ -106,6 +111,9 @@ sd</code></pre>
 <pre class="r"><code>mean &lt;- mean(pheno_df$phenos)
 mean</code></pre>
 <pre><code>## [1] 1.612028</code></pre>
+</div>
+<div id="filter-data-frame" class="section level3">
+<h3>Filter Data Frame</h3>
 <pre class="r"><code>genomat2 &lt;- as.data.frame(genomat)
  
 feeble &lt;- genomat2 %&gt;% #gives number of feeble minded individuals and phenotype
@@ -153,18 +161,27 @@ geno6 &lt;- as.data.frame(geno6)
 geno6[geno6 == 0] &lt;- 0
 geno6[geno6 == 1] &lt;- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
 geno6[geno6 == 2] &lt;- 1</code></pre>
+</div>
+<div id="data-frames-for-each-combination" class="section level3">
+<h3>Data Frames For Each Combination</h3>
 <pre class="r"><code>pheno_feeble_feeble &lt;- data.frame(phenos = rep(NA, numind))
 pheno_feeble_normal &lt;- data.frame(phenos = rep(NA, numind))
 pheno_feeble_high &lt;- data.frame(phenos = rep(NA, numind))
 pheno_normal_normal &lt;- data.frame(phenos = rep(NA, numind))
 pheno_normal_high &lt;- data.frame(phenos = rep(NA, numind))
 pheno_high_high &lt;- data.frame(phenos = rep(NA, numind))</code></pre>
+</div>
+<div id="empty-matrices" class="section level3">
+<h3>Empty Matrices</h3>
 <pre class="r"><code>genokid_feeble_feeble &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 genokid_feeble_normal &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 genokid_feeble_high &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 genokid_normal_normal &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)
 genokid_normal_high &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol =  numind + 1)
 genokid_high_high &lt;- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1)</code></pre>
+</div>
+<div id="crossing-genotypes" class="section level3">
+<h3>Crossing Genotypes</h3>
 <pre class="r"><code>genokid_feeble_feeble &lt;- geno1 + geno2
 pheno_feeble_feeble$phenos &lt;- genokid_feeble_feeble[,11]
 #pheno_feeble_feeble
@@ -277,6 +294,7 @@ probability_kid1</code></pre>
 probability_parent &lt;- (prop_fh + prop_fn + prop_ff) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
 probability_parent</code></pre>
 <pre><code>## [1] 0.9899135</code></pre>
+</div>
 
 
 </div>
