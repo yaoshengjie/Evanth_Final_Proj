@@ -117,6 +117,7 @@ genokid
 genokid <- geno1 + geno2
 
 genokid
+pheno_feeble_feeble <- genokid[,11]
 pheno_feeble_feeble
 >>>>>>> 3764eab4a2f8bd8a725e20bee03b0e20ba7e8203
 ```
