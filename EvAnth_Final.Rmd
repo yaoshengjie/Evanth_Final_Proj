@@ -49,23 +49,40 @@ normal <- genomat2 %>% #gives number of normal individuals and phenotype
 ```
  
 ```{r}
+#outcomes = c(0,1)
 geno1 <- feeble[sample(nrow(feeble), numind,replace = TRUE),]
 geno1<- as.data.frame(geno1)
+geno1 <- matrix(runif(100),ncol=1)
+geno1<- ifelse(mat<0.1,NA,mat)
+
 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
+geno2[geno1 == 2] <- 1
+geno2[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
 
 geno3 <- normal[sample(nrow(normal), numind,replace = TRUE),]
 geno3 <- as.data.frame(geno3)
+geno3[geno1 == 2] <- 1
+geno3[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
 
 geno4 <- normal[sample(nrow(normal), numind,replace = TRUE), ]
 geno4 <- as.data.frame(geno4)
+geno4[geno1 == 2] <- 1
+geno4[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
 
 geno5 <- high_function[sample(nrow(high_function), numind,replace = TRUE),]
 geno5 <- as.data.frame(geno5)
+geno5[geno1 == 2] <- 1
+geno5[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
 
 geno6 <- high_function[sample(nrow(high_function), numind,replace = TRUE), ]
 geno6 <- as.data.frame(geno6)
+geno6[geno1 == 2] <- 1
+geno6[geno1 == 1] <- sample(outcomes, 1, replace = TRUE)
+
+geno1
+
 ```
  
 ```{r}
@@ -117,65 +134,37 @@ pheno_high_high$phenos <- genokid_high_high[,11]
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_feeble_feeble$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
 
 ```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_feeble_normal$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
 
 ```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_feeble_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
 
 ```{r normal_normal}
 ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_normal_normal$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
 
 ```{r normal_high}
 ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_normal_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
 
 ```{r high_high}
 ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red")
-
-hist(pheno_high_high$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
 ```
  
- 
-for(i in 1:f1num){
-allele1<-sapply(geno1,function(x) sample(sampmat[x+1,],1)) #sample from low phenotype pare nt
-allele2<-sapply(geno2,function(x) sample(sampmat[x+1,],1)) #sample from high phenotype p arent
-    f1genomat[i,]<-allele1+allele2
-    f1pheno<-c(f1pheno,(allele1+allele2)%*%eff)
-}
- 
-hist(pheno_df$phenos,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(1,0,0,1/4),freq=F,ylim=c(0,1))
- 
-hist(f1pheno,breaks=20,main='',xlab='phenotypic value',xlim=c(low-0.5,high+0.5),col=rgb(0,0,1,1/4),add=T,freq=F)
+
 
