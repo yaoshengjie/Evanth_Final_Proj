@@ -68,21 +68,16 @@ for(i in 1:numind){
 ```
 
 ```{r}
-for (i in 1:numind){
+for (i in 1:10){
   genokid <- c(genokid, parent1[i] + parent2[i])
-  #if(genokid[i] > 2)
-    #genokid[i] <- 2
+  if(genokid[i] > 2)
+    genokid[i] <- 2
   genokid <- as.numeric(genokid)
-<<<<<<< HEAD
 }
 for (i in 1:numind){
-  pheno_feeble_feeble$phenos[i] <- genokid %*% eff
-=======
-  pheno_feeble_feeble$phenos[i] <- genokid[i] %*% eff
->>>>>>> deab5cfa11ef442e156083e70a05572bc99f38f1
+  pheno_feeble_feeble$phenos [i] <- genokid %*% eff
 }
-parent1
-parent2
+
 genokid
 pheno_feeble_feeble$phenos
 ```
