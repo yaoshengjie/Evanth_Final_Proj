@@ -64,9 +64,9 @@ geno1[geno1 == 2] <- 1
 
 geno2 <- feeble[sample(nrow(feeble), numind,replace = TRUE), ]
 geno2 <- as.data.frame(geno2)
-geno2[geno == 0] <- 0
-geno2[geno1 == 2] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
-geno2[geno1 == 2] <- 1
+geno2[geno2 == 0] <- 0
+geno2[geno2 == 1] <- sample(c(0,1), 1, prob = c(.5,.5), replace = TRUE)
+geno2[geno2 == 2] <- 1
 
 geno3 <- normal[sample(nrow(normal), numind,replace = TRUE),]
 geno3 <- as.data.frame(geno3)
@@ -117,9 +117,13 @@ genokid_high_high <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1
 ###Crossing Genotypes
 ```{r}
 genokid_feeble_feeble <- geno1 + geno2
-pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
-#pheno_feeble_feeble
+genokid_feeble_feeble
+pheno_feeble_feeble <- genokid_feeble_feeble[1,10] %*% eff
+pheno_feeble_feeble
+#genomat[i,11] <- geno %*% eff
+   #pheno_df$phenos[i] <- geno %*% eff
 
+pheno_feeble_feeble
 genokid_feeble_normal <- geno1 + geno3
 pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
 #pheno_feeble_normal
