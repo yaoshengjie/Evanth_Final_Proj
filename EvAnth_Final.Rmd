@@ -16,6 +16,7 @@ library(stringr)
 ```{r}
 numloci<-10 #number of loci, feeblemindedness is a complex trait
 eff<-rnorm(numloci,0,1) #effect size
+eff
 numind<-1000 #number of individuals to sample
 high<-2*sum(replace(eff,eff<0,0))
 low<-2*sum(replace(eff,eff>0,0))
@@ -122,11 +123,16 @@ pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
 genokid_feeble_feeble[genokid_feeble_feeble == 0] <- 0
 genokid_feeble_feeble[genokid_feeble_feeble == 2] <- 1
 genokid_feeble_feeble[genokid_feeble_feeble == 4] <- 2
+genokid_feeble_feeble <- data.matrix(genokid_feeble_feeble)
 genokid_feeble_feeble
 
 genokid_feeble_normal <- geno1 + geno3
 pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
+genokid_feeble_normal[genokid_feeble_normal == 0] <- 0
+genokid_feeble_normal[genokid_feeble_normal == 2] <- 1
+genokid_feeble_normal[genokid_feeble_normal == 4] <- 2
 #pheno_feeble_normal
+#genokid_feeble_normal
 
 genokid_feeble_high <- geno1 + geno5
 pheno_feeble_high$phenos <- genokid_feeble_high[,11]

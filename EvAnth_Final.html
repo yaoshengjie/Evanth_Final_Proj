@@ -89,7 +89,10 @@ library(dplyr)</code></pre>
 <h3>Creating Parent Distribution</h3>
 <pre class="r"><code>numloci&lt;-10 #number of loci, feeblemindedness is a complex trait
 eff&lt;-rnorm(numloci,0,1) #effect size
-numind&lt;-1000 #number of individuals to sample
+eff</code></pre>
+<pre><code>##  [1] -1.5055343  0.9848900 -0.2632651 -1.5444150  1.9252626  1.8491801
+##  [7]  0.2796215  0.0220716  0.5820933 -0.7529865</code></pre>
+<pre class="r"><code>numind&lt;-1000 #number of individuals to sample
 high&lt;-2*sum(replace(eff,eff&lt;0,0))
 low&lt;-2*sum(replace(eff,eff&gt;0,0))
 genomat &lt;- matrix(NA, nrow = numind, ncol = numloci + 1)
@@ -189,6 +192,7 @@ pheno_feeble_feeble$phenos &lt;- genokid_feeble_feeble[,11]
 genokid_feeble_feeble[genokid_feeble_feeble == 0] &lt;- 0
 genokid_feeble_feeble[genokid_feeble_feeble == 2] &lt;- 1
 genokid_feeble_feeble[genokid_feeble_feeble == 4] &lt;- 2
+genokid_feeble_feeble &lt;- data.matrix(genokid_feeble_feeble)
 genokid_feeble_feeble</code></pre>
 <pre><code>##       V1 V2 V3 V4 V5 V6 V7 V8 V9 V10        V11
 ## 8      2  0  1  1  0  0  0  0  0   1  -9.288654
@@ -1193,7 +1197,11 @@ genokid_feeble_feeble</code></pre>
 ## 5.43   1  0  0  2  0  0  1  0  0   0  -7.685451</code></pre>
 <pre class="r"><code>genokid_feeble_normal &lt;- geno1 + geno3
 pheno_feeble_normal$phenos &lt;- genokid_feeble_normal[,11]
+genokid_feeble_normal[genokid_feeble_normal == 0] &lt;- 0
+genokid_feeble_normal[genokid_feeble_normal == 2] &lt;- 1
+genokid_feeble_normal[genokid_feeble_normal == 4] &lt;- 2
 #pheno_feeble_normal
+#genokid_feeble_normal
 
 genokid_feeble_high &lt;- geno1 + geno5
 pheno_feeble_high$phenos &lt;- genokid_feeble_high[,11]
