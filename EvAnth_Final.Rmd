@@ -120,7 +120,6 @@ genokid_feeble_feeble <- geno1 + geno2
 pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
 #pheno_feeble_feeble
 
-pheno_feeble_feeble
 genokid_feeble_normal <- geno1 + geno3
 pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
 #pheno_feeble_normal
