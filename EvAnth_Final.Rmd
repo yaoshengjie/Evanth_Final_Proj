@@ -15,7 +15,8 @@ library(stringr)
 ###Creating Parent Distribution
 ```{r}
 numloci<-10 #number of loci, feeblemindedness is a complex trait
-eff<-rnorm(numloci,0,1) #effect size
+eff<-rnorm(numloci,1.72,1) #effect size
+eff
 numind<-1000 #number of individuals to sample
 high<-2*sum(replace(eff,eff<0,0))
 low<-2*sum(replace(eff,eff>0,0))
@@ -138,7 +139,8 @@ for(i in 1:numind){
    geno<-genokid_feeble_feeble2[i, 1:10]
    pheno_feeble_feeble$phenos[i] <- geno %*% eff
 }
-pheno_feeble_feeble$phenos
+#pheno_feeble_feeble$phenos
+
 genokid_feeble_normal <- geno1 + geno3
 #pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
 genokid_feeble_normal[genokid_feeble_normal == 0] <- 0
