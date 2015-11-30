@@ -117,11 +117,8 @@ genokid_high_high <- matrix(rep(NA, numind*11), nrow = numind, ncol = numind + 1
 ###Crossing Genotypes
 ```{r}
 genokid_feeble_feeble <- geno1 + geno2
-genokid_feeble_feeble
-pheno_feeble_feeble <- genokid_feeble_feeble[1,10] %*% eff
-pheno_feeble_feeble
-#genomat[i,11] <- geno %*% eff
-   #pheno_df$phenos[i] <- geno %*% eff
+pheno_feeble_feeble$phenos <- genokid_feeble_feeble[,11]
+#pheno_feeble_feeble
 
 pheno_feeble_feeble
 genokid_feeble_normal <- geno1 + geno3
