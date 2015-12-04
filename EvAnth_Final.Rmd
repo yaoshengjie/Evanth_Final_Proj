@@ -134,39 +134,71 @@ genokid_feeble_feeble[genokid_feeble_feeble == 0] <- 0
 genokid_feeble_feeble[genokid_feeble_feeble == 2] <- 1
 genokid_feeble_feeble[genokid_feeble_feeble == 4] <- 2
 genokid_feeble_feeble2 <- as.matrix(genokid_feeble_feeble)
-typeof(genokid_feeble_feeble2)
 for(i in 1:numind){
    geno<-genokid_feeble_feeble2[i, 1:10]
    pheno_feeble_feeble$phenos[i] <- geno %*% eff
 }
-#pheno_feeble_feeble$phenos
+#pheno_feeble_feeble
+#genokid_feeble_feeble
 
 genokid_feeble_normal <- geno1 + geno3
-#pheno_feeble_normal$phenos <- genokid_feeble_normal[,11]
 genokid_feeble_normal[genokid_feeble_normal == 0] <- 0
 genokid_feeble_normal[genokid_feeble_normal == 2] <- 1
 genokid_feeble_normal[genokid_feeble_normal == 4] <- 2
+genokid_feeble_normal2 <- as.matrix(genokid_feeble_normal)
+for(i in 1:numind){
+   geno<-genokid_feeble_normal2[i, 1:10]
+   pheno_feeble_normal$phenos[i] <- geno %*% eff
+}
 #pheno_feeble_normal
 #genokid_feeble_normal
 
 genokid_feeble_high <- geno1 + geno5
-#pheno_feeble_high$phenos <- genokid_feeble_high[,11]
+genokid_feeble_high[genokid_feeble_high == 0] <- 0
+genokid_feeble_high[genokid_feeble_high == 2] <- 1
+genokid_feeble_high[genokid_feeble_high == 4] <- 2
+genokid_feeble_high2 <- as.matrix(genokid_feeble_high)
+for(i in 1:numind){
+   geno<-genokid_feeble_high2[i, 1:10]
+   pheno_feeble_high$phenos[i] <- geno %*% eff
+}
 #pheno_feeble_high
 
 genokid_normal_normal <- geno3 + geno4
-#pheno_normal_normal$phenos <- genokid_normal_normal[,11]
+genokid_normal_normal[genokid_normal_normal == 0] <- 0
+genokid_normal_normal[genokid_normal_normal == 2] <- 1
+genokid_normal_normal[genokid_normal_normal == 4] <- 2
+genokid_normal_normal2 <- as.matrix(genokid_normal_normal)
+for(i in 1:numind){
+   geno<-genokid_normal_normal2[i, 1:10]
+   pheno_normal_normal$phenos[i] <- geno %*% eff
+}
 #pheno_normal_normal 
 
 genokid_normal_high <- geno3 + geno5
-#pheno_normal_high$phenos <- genokid_normal_high[,11]
+genokid_normal_high[genokid_normal_high == 0] <- 0
+genokid_normal_high[genokid_normal_high == 2] <- 1
+genokid_normal_high[genokid_normal_high == 4] <- 2
+genokid_normal_high2 <- as.matrix(genokid_normal_high)
+for(i in 1:numind){
+   geno<-genokid_normal_high2[i, 1:10]
+   pheno_normal_high$phenos[i] <- geno %*% eff
+}
 #pheno_normal_high 
 
 genokid_high_high <- geno5 + geno6
-#pheno_high_high$phenos <- genokid_high_high[,11]
+genokid_high_high[genokid_high_high == 0] <- 0
+genokid_high_high[genokid_high_high == 2] <- 1
+genokid_high_high[genokid_high_high == 4] <- 2
+genokid_high_high2 <- as.matrix(genokid_high_high)
+for(i in 1:numind){
+   geno<-genokid_high_high2[i, 1:10]
+   pheno_high_high$phenos[i] <- geno %*% eff
+}
 #pheno_high_high
 ```
 
-```{r feeble_feeble, eval = FALSE}
+```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
   geom_histogram(binwidth =.2) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -181,7 +213,7 @@ prop_ff <- length(below_sd_ff) / numind
 prop_ff
 ```
 
-```{r feeble_normal, eval = FALSE}
+```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
   geom_histogram(binwidth =.15) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -196,7 +228,7 @@ prop_fn <- length(below_sd_fn) / numind
 prop_fn
 ```
 
-```{r feeble_high, eval = FALSE}
+```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
   geom_histogram(binwidth =.2) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -211,7 +243,7 @@ prop_fh <- length(below_sd_fh) / numind
 prop_fh
 ```
 
-```{r normal_normal, eval = FALSE}
+```{r normal_normal}
 ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
   geom_histogram(binwidth =.2) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -226,7 +258,7 @@ prop_nn <- length(below_sd_nn) / numind
 prop_nn
 ```
 
-```{r normal_high, eval = FALSE}
+```{r normal_high}
 ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
   geom_histogram(binwidth =.2) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -241,7 +273,7 @@ prop_nh <- length(below_sd_nh) / numind
 prop_nh
 ```
 
-```{r high_high, eval = FALSE}
+```{r high_high}
 ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
   geom_histogram(binwidth =.2) +
   geom_vline(xintercept = -3.651707, color = "red") +
@@ -256,7 +288,7 @@ prop_hh <- length(below_sd_hh) / numind
 prop_hh
 ```
 
-```{r, eval = FALSE}
+```{r}
 #probability of child being feebleminded given that one parent is feebleminded
 
 probability_kid1 <- prop_fh + prop_fn + prop_ff
@@ -265,7 +297,7 @@ probability_kid1
 #not actually one, but very close because we have been using discrete values
 ```
 
-```{r, eval = FALSE}
+```{r}
 #probability of one parent being feebleminded given that their child is feebleminded
 
 probability_parent <- (prop_fh + prop_fn + prop_ff) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
