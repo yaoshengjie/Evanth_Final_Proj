@@ -30,8 +30,8 @@ for(i in 1:numind){
 }
 #parent distribution
 hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(-3.651707), col='red')
-abline(v=(6.781549), col='red')
+abline(v=(9.319146), col='red')
+abline(v=(28.311794), col='red')
  
 sd <- sd(pheno_df$phenos)
 sd
@@ -201,12 +201,12 @@ for(i in 1:numind){
 ```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_ff <- c()
 for (i in pheno_feeble_feeble$phenos){
-  if (i <= (mean-2*sd))
+  if (i <= (9.319146))
     below_sd_ff <- c(below_sd_ff, i)
 }
 prop_ff <- length(below_sd_ff) / numind
@@ -216,12 +216,12 @@ prop_ff
 ```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
   geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_fn <- c()
 for (i in pheno_feeble_normal$phenos){
-  if (i <= (-3.651707))
+  if (i <= (9.319146))
     below_sd_fn <- c(below_sd_fn, i)
 }
 prop_fn <- length(below_sd_fn) / numind
@@ -231,12 +231,12 @@ prop_fn
 ```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_fh <- c()
 for (i in pheno_feeble_high$phenos){
-  if (i <= (-3.651707))
+  if (i <= (9.319146))
     below_sd_fh <- c(below_sd_fh, i)
 }
 prop_fh <- length(below_sd_fh) / numind
@@ -246,12 +246,12 @@ prop_fh
 ```{r normal_normal}
 ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_nn <- c()
 for (i in pheno_normal_normal$phenos){
-  if (i <= (-3.651707))
+  if (i <= (9.319146))
     below_sd_nn <- c(below_sd_nn, i)
 }
 prop_nn <- length(below_sd_nn) / numind
@@ -261,12 +261,12 @@ prop_nn
 ```{r normal_high}
 ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_nh <- c()
 for (i in pheno_normal_high$phenos){
-  if (i <= (-3.651707))
+  if (i <= (9.319146))
     below_sd_nh <- c(below_sd_nh, i)
 }
 prop_nh <- length(below_sd_nh) / numind
@@ -276,12 +276,12 @@ prop_nh
 ```{r high_high}
 ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = -3.651707, color = "red") +
+  geom_vline(xintercept = 9.319146, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_hh <- c()
 for (i in pheno_high_high$phenos){
-  if (i <= (-3.651707))
+  if (i <= (9.319146))
     below_sd_hh <- c(below_sd_hh, i)
 }
 prop_hh <- length(below_sd_hh) / numind
