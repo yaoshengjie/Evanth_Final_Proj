@@ -18,8 +18,6 @@ numloci<-10 #number of loci, feeblemindedness is a complex trait
 eff<-rnorm(numloci,1.72,1) #effect size
 eff
 numind<-1000 #number of individuals to sample
-high<-2*sum(replace(eff,eff<0,0))
-low<-2*sum(replace(eff,eff>0,0))
 genomat <- matrix(NA, nrow = numind, ncol = numloci + 1)
 pheno_df <- data.frame(phenos = rep(NA, numind))
 for(i in 1:numind){
@@ -28,16 +26,16 @@ for(i in 1:numind){
    genomat[i,11] <- geno %*% eff
    pheno_df$phenos[i] <- geno %*% eff
 }
-#parent distribution
-hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value',xlim=c(low-0.5,high+0.5))
-abline(v=(9.319146), col='red')
-abline(v=(28.311794), col='red')
- 
+
 sd <- sd(pheno_df$phenos)
 sd
  
 mean <- mean(pheno_df$phenos)
 mean
+
+hist(pheno_df$phenos,breaks = 100, main = '',xlab='phenotypic value')
+abline(v=(mean-2*sd), col='red')
+abline(v=(mean + 2*sd), col='red')
 ```
 
 ###Filter Data Frame
@@ -47,7 +45,7 @@ genomat2 <- as.data.frame(genomat)
 feeble <- genomat2 %>% #gives number of feeble minded individuals and phenotype
   filter(genomat2[,11] < (mean - 2*sd))
 
-high_function <- genomat2 %>% #gives number of high functioning individuals and phenotype
+high <- genomat2 %>% #gives number of high functioning individuals and phenotype
   filter(genomat2[,11] > (mean + 2*sd))
 
 normal <- genomat2 %>% #gives number of normal individuals and phenotype
@@ -83,14 +81,14 @@ geno4[geno4 == 2] <- 2
 geno4[geno4 == 1] <- sample(c(0,2), 1, prob = c(.5,.5), replace = TRUE)
 geno4 <- geno4[,-11]
 
-geno5 <- high_function[sample(nrow(high_function), numind,replace = TRUE),]
+geno5 <- high[sample(nrow(high), numind,replace = TRUE),]
 geno5 <- as.data.frame(geno5)
 geno5[geno5 == 0] <- 0
 geno5[geno5 == 2] <- 2
 geno5[geno5 == 1] <- sample(c(0,2), 1, prob = c(.5,.5), replace = TRUE)
 geno5 <- geno5[,-11]
 
-geno6 <- high_function[sample(nrow(high_function), numind,replace = TRUE), ]
+geno6 <- high[sample(nrow(high), numind,replace = TRUE), ]
 geno6 <- as.data.frame(geno6)
 geno6[geno6 == 0] <- 0
 geno6[geno6 == 2] <- 2
@@ -138,8 +136,6 @@ for(i in 1:numind){
    geno<-genokid_feeble_feeble2[i, 1:10]
    pheno_feeble_feeble$phenos[i] <- geno %*% eff
 }
-#pheno_feeble_feeble
-#genokid_feeble_feeble
 
 genokid_feeble_normal <- geno1 + geno3
 genokid_feeble_normal[genokid_feeble_normal == 0] <- 0
@@ -150,8 +146,6 @@ for(i in 1:numind){
    geno<-genokid_feeble_normal2[i, 1:10]
    pheno_feeble_normal$phenos[i] <- geno %*% eff
 }
-#pheno_feeble_normal
-#genokid_feeble_normal
 
 genokid_feeble_high <- geno1 + geno5
 genokid_feeble_high[genokid_feeble_high == 0] <- 0
@@ -162,7 +156,6 @@ for(i in 1:numind){
    geno<-genokid_feeble_high2[i, 1:10]
    pheno_feeble_high$phenos[i] <- geno %*% eff
 }
-#pheno_feeble_high
 
 genokid_normal_normal <- geno3 + geno4
 genokid_normal_normal[genokid_normal_normal == 0] <- 0
@@ -173,7 +166,6 @@ for(i in 1:numind){
    geno<-genokid_normal_normal2[i, 1:10]
    pheno_normal_normal$phenos[i] <- geno %*% eff
 }
-#pheno_normal_normal 
 
 genokid_normal_high <- geno3 + geno5
 genokid_normal_high[genokid_normal_high == 0] <- 0
@@ -184,7 +176,6 @@ for(i in 1:numind){
    geno<-genokid_normal_high2[i, 1:10]
    pheno_normal_high$phenos[i] <- geno %*% eff
 }
-#pheno_normal_high 
 
 genokid_high_high <- geno5 + geno6
 genokid_high_high[genokid_high_high == 0] <- 0
@@ -195,18 +186,17 @@ for(i in 1:numind){
    geno<-genokid_high_high2[i, 1:10]
    pheno_high_high$phenos[i] <- geno %*% eff
 }
-#pheno_high_high
 ```
 
 ```{r feeble_feeble}
 ggplot(data = pheno_feeble_feeble, aes(x = pheno_feeble_feeble$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_ff <- c()
 for (i in pheno_feeble_feeble$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_ff <- c(below_sd_ff, i)
 }
 prop_ff <- length(below_sd_ff) / numind
@@ -216,12 +206,12 @@ prop_ff
 ```{r feeble_normal}
 ggplot(data = pheno_feeble_normal, aes(x = pheno_feeble_normal$phenos)) +
   geom_histogram(binwidth =.15) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_fn <- c()
 for (i in pheno_feeble_normal$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_fn <- c(below_sd_fn, i)
 }
 prop_fn <- length(below_sd_fn) / numind
@@ -230,13 +220,13 @@ prop_fn
 
 ```{r feeble_high}
 ggplot(data = pheno_feeble_high, aes(x = pheno_feeble_high$phenos)) +
-  geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_histogram(binwidth =.15) +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_fh <- c()
 for (i in pheno_feeble_high$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_fh <- c(below_sd_fh, i)
 }
 prop_fh <- length(below_sd_fh) / numind
@@ -246,12 +236,12 @@ prop_fh
 ```{r normal_normal}
 ggplot(data = pheno_normal_normal, aes(x = pheno_normal_normal$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_nn <- c()
 for (i in pheno_normal_normal$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_nn <- c(below_sd_nn, i)
 }
 prop_nn <- length(below_sd_nn) / numind
@@ -261,12 +251,12 @@ prop_nn
 ```{r normal_high}
 ggplot(data = pheno_normal_high, aes(x = pheno_normal_high$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_nh <- c()
 for (i in pheno_normal_high$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_nh <- c(below_sd_nh, i)
 }
 prop_nh <- length(below_sd_nh) / numind
@@ -276,12 +266,12 @@ prop_nh
 ```{r high_high}
 ggplot(data = pheno_high_high, aes(x = pheno_high_high$phenos)) +
   geom_histogram(binwidth =.2) +
-  geom_vline(xintercept = 9.319146, color = "red") +
+  geom_vline(xintercept = mean - 2*sd, color = "red") +
   xlab("Phenotypic Value")
 
 below_sd_hh <- c()
 for (i in pheno_high_high$phenos){
-  if (i <= (9.319146))
+  if (i <= (mean - 2*sd))
     below_sd_hh <- c(below_sd_hh, i)
 }
 prop_hh <- length(below_sd_hh) / numind
