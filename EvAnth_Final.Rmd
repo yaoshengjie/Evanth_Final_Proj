@@ -6,7 +6,7 @@ output: html_document
 ---
 ###Loading Libraries
 ```{r}
-set.seed(83942)
+set.seed(2436)
 library(ggplot2)
 library(dplyr)
 library(stringr)
@@ -15,7 +15,7 @@ library(stringr)
 ###Creating Parent Distribution
 ```{r}
 numloci<-10 #number of loci, feeblemindedness is a complex trait
-eff<-rnorm(numloci,1.72,1) #effect size
+eff<-rnorm(numloci,0,1) #effect size
 eff
 numind<-1000 #number of individuals to sample
 genomat <- matrix(NA, nrow = numind, ncol = numloci + 1)
@@ -279,16 +279,8 @@ prop_hh
 ```
 
 ```{r}
-#probability of child being feebleminded given that one parent is feebleminded
-
-probability_kid1 <- prop_fh + prop_fn + prop_ff
-probability_kid1
-
-#not actually one, but very close because we have been using discrete values
-```
-
-```{r}
-#probability of one parent being feebleminded given that their child is feebleminded
+prop_fh + prop_fn + prop_ff
+(prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
 
 probability_parent <- (prop_fh + prop_fn + prop_ff) / (prop_ff + prop_hh + prop_nh + prop_nn + prop_fh + prop_fn)
 probability_parent
